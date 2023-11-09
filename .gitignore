@@ -1,0 +1,7 @@
+# ide
+.idea
+.vscode
+
+# builds
+*.wasm
+*.exe
