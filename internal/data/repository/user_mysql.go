@@ -1,0 +1,67 @@
+package repository
+
+import (
+	"github.com/hixraid/blog/internal/data/model"
+	"github.com/jmoiron/sqlx"
+)
+
+type userMySql struct {
+	db *sqlx.DB
+}
+
+func newUserMySql(db *sqlx.DB) *userMySql {
+	return &userMySql{db}
+}
+
+func (r *userMySql) Create(input model.UserInput) (int, error) {
+	var id int
+	query := "INSERT INTO users (name, email, password, role) VALUES ($1, $2, $3, $4)"
+
+	row := r.db.QueryRow(query, input.Name, input.Email, input.Password, model.UserRole)
+	if err := row.Scan(&id); err != nil {
+		return -1, err
+	}
+
+	return id, nil
+}
+
+func (r *userMySql) Get(email, password string) (model.User, error) {
+	var user model.User
+
+	query := "SELECT * FROM users WHERE email=$1 AND password=$2)"
+	err := r.db.Get(&user, query, email, password)
+
+	return user, err
+}
+
+func (r *userMySql) GetAll() ([]model.UserOutput, error) {
+	var users []model.UserOutput
+
+	query := "SELECT user_id, name, email, created_at, updated_at FROM users"
+	err := r.db.Select(&users, query)
+
+	return users, err
+}
+
+func (r *userMySql) GetById(userId int) (model.UserOutput, error) {
+	var user model.UserOutput
+
+	query := "SELECT user_id, name, email, created_at, updated_at FROM users WHERE user_id=$1"
+	err := r.db.Get(&user, query, userId)
+
+	return user, err
+}
+
+func (r *userMySql) UpdateById(userId int, input model.UserInput) error {
+	query := "UPDATE users SET name=$1, email=$2, password=$3 WHERE user_id=$4"
+	_, err := r.db.Exec(query, input.Name, input.Email, input.Password, userId)
+
+	return err
+}
+
+func (r *userMySql) DeleteById(userId int) error {
+	query := "DELETE FROM users WHERE user_id=$1"
+	_, err := r.db.Exec(query, userId)
+
+	return err
+}

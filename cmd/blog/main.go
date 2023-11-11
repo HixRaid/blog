@@ -5,7 +5,9 @@ import (
 	"os/signal"
 	"syscall"
 
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/hixraid/blog/internal/config"
+	"github.com/hixraid/blog/internal/data/repository"
 	"github.com/hixraid/blog/internal/server"
 	"github.com/sirupsen/logrus"
 )
@@ -19,6 +21,11 @@ func main() {
 	cfg, err := config.ParseConfig(cfgFile)
 	if err != nil {
 		logrus.Fatalf("can't parse config: %v", err)
+	}
+
+	_, err = repository.NewMySql(cfg.DB)
+	if err != nil {
+		logrus.Fatalf("error database connection: %v", err)
 	}
 
 	srv := server.New(cfg.Server.Addr, nil)
