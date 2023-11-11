@@ -14,15 +14,18 @@ func newPostMySql(db *sqlx.DB) *postMySql {
 }
 
 func (r *postMySql) Create(input model.PostInput) (int, error) {
-	var id int
-	query := "INSERT INTO posts (title, body) VALUES ($1, $2)"
-
-	row := r.db.QueryRow(query, input.Title, input.Body)
-	if err := row.Scan(&id); err != nil {
+	query := "INSERT INTO posts (title, body) VALUES (?, ?)"
+	result, err := r.db.Exec(query, input.Title, input.Body)
+	if err != nil {
 		return -1, err
 	}
 
-	return id, nil
+	id, err := result.LastInsertId()
+	if err != nil {
+		return -1, err
+	}
+
+	return int(id), nil
 }
 
 func (r *postMySql) GetAll() ([]model.Post, error) {
@@ -37,21 +40,21 @@ func (r *postMySql) GetAll() ([]model.Post, error) {
 func (r *postMySql) GetById(postId int) (model.Post, error) {
 	var post model.Post
 
-	query := "SELECT * FROM users WHERE post_id=$1"
+	query := "SELECT * FROM users WHERE post_id=?"
 	err := r.db.Get(&post, query, postId)
 
 	return post, err
 }
 
 func (r *postMySql) UpdateById(postId int, input model.PostInput) error {
-	query := "UPDATE posts SET name=$1, email=$2 WHERE post_id=$3"
+	query := "UPDATE posts SET name=?, email=? WHERE post_id=?"
 	_, err := r.db.Exec(query, input.Title, input.Body, postId)
 
 	return err
 }
 
 func (r *postMySql) DeleteById(postId int) error {
-	query := "DELETE FROM posts WHERE post_id=$1"
+	query := "DELETE FROM posts WHERE post_id=?"
 	_, err := r.db.Exec(query, postId)
 
 	return err
