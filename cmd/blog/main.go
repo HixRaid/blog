@@ -8,7 +8,9 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/hixraid/blog/internal/config"
 	"github.com/hixraid/blog/internal/data/repository"
+	"github.com/hixraid/blog/internal/handler"
 	"github.com/hixraid/blog/internal/server"
+	"github.com/hixraid/blog/internal/service"
 	"github.com/sirupsen/logrus"
 )
 
@@ -23,12 +25,17 @@ func main() {
 		logrus.Fatalf("can't parse config: %v", err)
 	}
 
-	_, err = repository.NewMySql(cfg.DB)
+	db, err := repository.NewMySql(cfg.DB)
 	if err != nil {
 		logrus.Fatalf("error database connection: %v", err)
 	}
 
-	srv := server.New(cfg.Server.Addr, nil)
+	repos := repository.New(db)
+	service := service.New(repos)
+	handler := handler.New(service)
+	router := handler.InitRouter()
+
+	srv := server.New(cfg.Server.Addr, router)
 
 	go func() {
 		if err := srv.Run(); err != nil {
