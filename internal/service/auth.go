@@ -7,13 +7,12 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/hixraid/blog/internal/data/model"
 	"github.com/hixraid/blog/internal/data/repository"
-	"golang.org/x/crypto/bcrypt"
+	"github.com/hixraid/blog/internal/utils"
 )
 
 const (
-	passwordCost = 123456789
-	signingKey   = "123456789"
-	tokenTTL     = time.Hour * 24
+	signingKey = "123456789"
+	tokenTTL   = time.Hour * 24
 )
 
 type userClaims struct {
@@ -30,7 +29,7 @@ func NewAuthorization(repos repository.UserRepository) *Authorization {
 }
 
 func (s *Authorization) CreateUser(input model.UserInput) (int, error) {
-	password, err := hashPassword(input.Password)
+	password, err := utils.HashPassword(input.Password)
 	if err != nil {
 		return -1, err
 	}
@@ -40,7 +39,7 @@ func (s *Authorization) CreateUser(input model.UserInput) (int, error) {
 }
 
 func (s *Authorization) GenerateToken(email, password string) (string, error) {
-	password, err := hashPassword(password)
+	password, err := utils.HashPassword(password)
 	if err != nil {
 		return "", err
 	}
@@ -80,9 +79,4 @@ func (s *Authorization) ParseToken(accessToken string) (int, error) {
 	}
 
 	return claims.UserId, nil
-}
-
-func hashPassword(password string) (string, error) {
-	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
-	return string(bytes), err
 }
