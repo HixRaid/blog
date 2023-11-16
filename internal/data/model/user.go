@@ -26,11 +26,11 @@ type UserInput struct {
 }
 
 type UserOutput struct {
-	UserId    int       `json:"user_id"`
-	Name      string    `json:"name"`
-	Email     string    `json:"email"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
+	UserId    int       `db:"user_id" json:"user_id"`
+	Name      string    `db:"name" json:"name"`
+	Email     string    `db:"email" json:"email"`
+	CreatedAt time.Time `db:"created_at" json:"created_at"`
+	UpdatedAt time.Time `db:"updated_at" json:"updated_at"`
 }
 
 type UserIdResponse struct {

@@ -8,7 +8,7 @@ import (
 )
 
 func NewMySql(cfg *config.DBConfig) (*sqlx.DB, error) {
-	sourceName := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s",
+	sourceName := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true",
 		cfg.User, cfg.Password, cfg.Host, cfg.Port, cfg.Name)
 
 	db, err := sqlx.Open("mysql", sourceName)

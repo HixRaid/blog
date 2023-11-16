@@ -25,7 +25,7 @@ func (h *Handler) InitRouter() *gin.Engine {
 	{
 		users := api.Group("/users")
 		{
-			users.GET("/:id", h.userById)
+			users.GET("/:user_id", h.userById)
 			users.GET("/", h.allUsers)
 			users.PUT("/", h.updateUser)
 			users.DELETE("/", h.deleteUser)
@@ -35,11 +35,11 @@ func (h *Handler) InitRouter() *gin.Engine {
 		{
 			posts.POST("/", h.createPost)
 			posts.GET("/", h.allPosts)
-			posts.GET("/:id", h.postById)
-			posts.PUT("/:id", h.updatePostById)
-			posts.DELETE("/:id", h.deletePostById)
+			posts.GET("/:post_id", h.postById)
+			posts.PUT("/:post_id", h.updatePostById)
+			posts.DELETE("/:post_id", h.deletePostById)
 
-			comments := api.Group("/:id/comments")
+			comments := api.Group("/:post_id/comments")
 			{
 				comments.POST("/", h.createComment)
 				comments.GET("/", h.commentsByPostId)
@@ -48,8 +48,8 @@ func (h *Handler) InitRouter() *gin.Engine {
 
 		comments := api.Group("/comments")
 		{
-			comments.PUT("/:id", h.updateCommentById)
-			comments.DELETE("/:id", h.deleteCommentById)
+			comments.PUT("/:comment_id", h.updateCommentById)
+			comments.DELETE("/:comment_id", h.deleteCommentById)
 		}
 	}
 
