@@ -14,3 +14,7 @@ type PostInput struct {
 	Title string `json:"title"`
 	Body  string `json:"body"`
 }
+
+type PostIdResponse struct {
+	PostId int `json:"post_id"`
+}
