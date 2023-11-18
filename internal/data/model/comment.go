@@ -16,3 +16,7 @@ type CommentInput struct {
 	UserId int    `json:"user_id"`
 	PostId int    `json:"post_id"`
 }
+
+type CommentIdResponse struct {
+	CommentId int `json:"comment_id"`
+}
