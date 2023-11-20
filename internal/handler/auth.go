@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/hixraid/blog/internal/data/model"
+	"github.com/hixraid/blog/internal/response"
 )
 
 type signInInput struct {
@@ -19,17 +20,17 @@ type tokenResponse struct {
 func (h *Handler) signUp(ctx *gin.Context) {
 	var input model.UserInput
 	if err := ctx.Bind(&input); err != nil {
-		newErrorResponse(ctx, http.StatusBadRequest, "invalid input body")
+		response.NewErrorResponse(ctx, http.StatusBadRequest, "invalid input body")
 		return
 	}
 
 	userId, err := h.service.Auth.CreateUser(input)
 	if err != nil {
-		newErrorResponse(ctx, http.StatusInternalServerError, err.Error())
+		response.NewErrorResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	ctx.JSON(http.StatusOK, model.UserIdResponse{
+	response.NewOkResponse(ctx, model.UserIdResponse{
 		UserId: userId,
 	})
 }
@@ -37,17 +38,17 @@ func (h *Handler) signUp(ctx *gin.Context) {
 func (h *Handler) signIn(ctx *gin.Context) {
 	var input signInInput
 	if err := ctx.Bind(&input); err != nil {
-		newErrorResponse(ctx, http.StatusBadRequest, "invalid input body")
+		response.NewErrorResponse(ctx, http.StatusBadRequest, "invalid input body")
 		return
 	}
 
 	token, err := h.service.Auth.GenerateToken(input.Email, input.Password)
 	if err != nil {
-		newErrorResponse(ctx, http.StatusInternalServerError, err.Error())
+		response.NewErrorResponse(ctx, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	ctx.JSON(http.StatusOK, tokenResponse{
+	response.NewOkResponse(ctx, tokenResponse{
 		Token: token,
 	})
 }
