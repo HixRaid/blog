@@ -11,7 +11,8 @@ const cost = 16
 
 func ValidatePassword(password string) bool {
 	len := utf8.RuneCountInString(password)
-	if len <= 8 && len >= 32 {
+
+	if len < 8 || len > 32 {
 		return false
 	}
 
@@ -19,13 +20,13 @@ func ValidatePassword(password string) bool {
 	hasLower := false
 	hasDigit := false
 
-	for _, symbol := range password {
+	for _, s := range password {
 		switch {
-		case unicode.IsUpper(symbol):
+		case unicode.IsUpper(s):
 			hasUpper = true
-		case unicode.IsLower(symbol):
+		case unicode.IsLower(s):
 			hasLower = true
-		case unicode.IsDigit(symbol):
+		case unicode.IsDigit(s):
 			hasDigit = true
 		}
 	}
