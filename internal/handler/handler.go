@@ -2,6 +2,7 @@ package handler
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/hixraid/blog/internal/middleware"
 	"github.com/hixraid/blog/internal/service"
 )
 
@@ -27,8 +28,8 @@ func (h *Handler) InitRouter() *gin.Engine {
 		{
 			users.GET("/:user_id", h.userById)
 			users.GET("/", h.allUsers)
-			users.PUT("/", h.updateUser)
-			users.DELETE("/", h.deleteUser)
+			users.PUT("/", middleware.IdentifyUser(h.service.Auth), h.updateUser)
+			users.DELETE("/", middleware.IdentifyUser(h.service.Auth), h.deleteUser)
 		}
 
 		posts := api.Group("/posts")
@@ -36,20 +37,20 @@ func (h *Handler) InitRouter() *gin.Engine {
 			posts.POST("/", h.createPost)
 			posts.GET("/", h.allPosts)
 			posts.GET("/:post_id", h.postById)
-			posts.PUT("/:post_id", h.updatePostById)
-			posts.DELETE("/:post_id", h.deletePostById)
+			posts.PUT("/:post_id", middleware.IdentifyUser(h.service.Auth), h.updatePostById)
+			posts.DELETE("/:post_id", middleware.IdentifyUser(h.service.Auth), h.deletePostById)
 
 			comments := api.Group("/:post_id/comments")
 			{
-				comments.POST("/", h.createComment)
+				comments.POST("/", middleware.IdentifyUser(h.service.Auth), middleware.IdentifyUser(h.service.Auth), h.createComment)
 				comments.GET("/", h.commentsByPostId)
 			}
 		}
 
 		comments := api.Group("/comments")
 		{
-			comments.PUT("/:comment_id", h.updateCommentById)
-			comments.DELETE("/:comment_id", h.deleteCommentById)
+			comments.PUT("/:comment_id", middleware.IdentifyUser(h.service.Auth), h.updateCommentById)
+			comments.DELETE("/:comment_id", middleware.IdentifyUser(h.service.Auth), h.deleteCommentById)
 		}
 	}
 
