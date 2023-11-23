@@ -1,8 +1,11 @@
 package service
 
 import (
+	"errors"
+
 	"github.com/hixraid/blog/internal/data/model"
 	"github.com/hixraid/blog/internal/data/repository"
+	"github.com/hixraid/blog/internal/utils"
 )
 
 type UserItem struct {
@@ -22,6 +25,10 @@ func (s *UserItem) GetById(userId int) (model.UserOutput, error) {
 }
 
 func (s *UserItem) UpdateById(userId int, input model.UserInput) error {
+	if !utils.ValidatePassword(input.Password) {
+		return errors.New("invalid password")
+	}
+
 	return s.repository.UpdateById(userId, input)
 }
 
