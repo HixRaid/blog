@@ -2,7 +2,7 @@ package model
 
 import "time"
 
-type Role uint8
+type Role int8
 
 const (
 	UserRole  Role = 0

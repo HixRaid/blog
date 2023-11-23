@@ -39,14 +39,13 @@ func (s *Authorization) CreateUser(input model.UserInput) (int, error) {
 }
 
 func (s *Authorization) GenerateToken(email, password string) (string, error) {
-	password, err := utils.HashPassword(password)
+	user, err := s.repository.Get(email)
 	if err != nil {
 		return "", err
 	}
 
-	user, err := s.repository.Get(email, password)
-	if err != nil {
-		return "", err
+	if ok := utils.CheckPasswordHash(password, user.Password); !ok {
+		return "", errors.New("incorrect password")
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, &userClaims{

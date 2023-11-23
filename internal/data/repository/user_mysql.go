@@ -28,11 +28,11 @@ func (r *userMySql) Create(input model.UserInput) (int, error) {
 	return int(id), nil
 }
 
-func (r *userMySql) Get(email, password string) (model.User, error) {
+func (r *userMySql) Get(email string) (model.User, error) {
 	var user model.User
 
-	query := "SELECT * FROM users WHERE email=? AND password=?"
-	err := r.db.Get(&user, query, email, password)
+	query := "SELECT * FROM users WHERE email=?"
+	err := r.db.Get(&user, query, email)
 
 	return user, err
 }
