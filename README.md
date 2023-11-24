@@ -13,20 +13,20 @@ Simple Go blog
   - /users
     - /:user_id `GET` GetUserById
     - / `GET` GetAllUsers
-    - / `PUT` UpdateUserById
-    - / `DELETE` DeleteUserById
+    - / `PUT` UpdateUserById 🧑 `auth`
+    - / `DELETE` DeleteUserById 🧑 `auth`
   - /posts
-    - / `POST` CreatePost
+    - / `POST` CreatePost 👑 `auth / admin`
     - / `GET` GetAllPosts
     - /:post_id `GET` GetPostById
-    - /:post_id `PUT` UpdatePostById
-    - /:post_id `DELETE` DeleteUserById
+    - /:post_id `PUT` UpdatePostById 👑 `auth / admin`
+    - /:post_id `DELETE` DeleteUserById 👑 `auth / admin`
     - /:post_id/comments
-      - / `POST` CreateCommentByPostId
+      - / `POST` CreateCommentByPostId 🧑 `auth`
       - / `GET` GetCommentsByPostId
   - /comments
-    - /:comment_id `PUT` UpdateCommentById
-    - /:comment_id `DELETE` DeleteCommentById
+    - /:comment_id `PUT` UpdateCommentById 🧑 `auth`
+    - /:comment_id `DELETE` DeleteCommentById 🧑 `auth`
 
 ## 🛠️ Built with
 

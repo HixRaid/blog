@@ -34,11 +34,11 @@ func (h *Handler) InitRouter() *gin.Engine {
 
 		posts := api.Group("/posts")
 		{
-			posts.POST("/", h.createPost)
+			posts.POST("/", h.createPost, middleware.IdentifyUser(h.service.Auth), middleware.IdentifyAdmin(h.service.User))
 			posts.GET("/", h.allPosts)
 			posts.GET("/:post_id", h.postById)
-			posts.PUT("/:post_id", middleware.IdentifyUser(h.service.Auth), h.updatePostById)
-			posts.DELETE("/:post_id", middleware.IdentifyUser(h.service.Auth), h.deletePostById)
+			posts.PUT("/:post_id", middleware.IdentifyUser(h.service.Auth), middleware.IdentifyAdmin(h.service.User), h.updatePostById)
+			posts.DELETE("/:post_id", middleware.IdentifyUser(h.service.Auth), middleware.IdentifyAdmin(h.service.User), h.deletePostById)
 
 			comments := api.Group("/:post_id/comments")
 			{

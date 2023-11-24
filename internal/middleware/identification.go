@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
+	"github.com/hixraid/blog/internal/data/model"
 	"github.com/hixraid/blog/internal/response"
 	"github.com/hixraid/blog/internal/service"
 )
@@ -36,6 +37,27 @@ func IdentifyUser(s service.AuthService) gin.HandlerFunc {
 		}
 
 		ctx.Set(userCtx, userId)
+	}
+}
+
+func IdentifyAdmin(s service.UserService) gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		userId, err := GetUserId(ctx)
+		if err != nil {
+			response.NewErrorResponse(ctx, http.StatusInternalServerError, err.Error())
+			return
+		}
+
+		user, err := s.GetById(userId)
+		if err != nil {
+			response.NewErrorResponse(ctx, http.StatusInternalServerError, err.Error())
+			return
+		}
+
+		if user.Role != model.AdminRole {
+			response.NewErrorResponse(ctx, http.StatusForbidden, err.Error())
+			return
+		}
 	}
 }
 

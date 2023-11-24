@@ -40,7 +40,7 @@ func (r *userMySql) Get(email string) (model.User, error) {
 func (r *userMySql) GetAll() ([]model.UserOutput, error) {
 	var users []model.UserOutput
 
-	query := "SELECT user_id, name, email, created_at, updated_at FROM users"
+	query := "SELECT user_id, name, email, role, created_at, updated_at FROM users"
 	err := r.db.Select(&users, query)
 
 	return users, err
@@ -49,7 +49,7 @@ func (r *userMySql) GetAll() ([]model.UserOutput, error) {
 func (r *userMySql) GetById(userId int) (model.UserOutput, error) {
 	var user model.UserOutput
 
-	query := "SELECT user_id, name, email, created_at, updated_at FROM users WHERE user_id=?"
+	query := "SELECT user_id, name, email, role, created_at, updated_at FROM users WHERE user_id=?"
 	err := r.db.Get(&user, query, userId)
 
 	return user, err
