@@ -1,6 +1,10 @@
 package utils
 
-import "testing"
+import (
+	"testing"
+
+	"golang.org/x/crypto/bcrypt"
+)
 
 func TestValidatePassword(t *testing.T) {
 	passwords := map[string]bool{
@@ -16,5 +20,30 @@ func TestValidatePassword(t *testing.T) {
 		if ValidatePassword(k) != v {
 			t.Errorf("incorrect result for '%s'", k)
 		}
+	}
+}
+
+func TestHashPassword(t *testing.T) {
+	password := "abcdefghijklM14"
+
+	hash, err := HashPassword(password)
+	if err != nil {
+		t.Fatal("incorrect result")
+	}
+
+	err = bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
+	if err != nil {
+		t.Fatal("incorrect result")
+	}
+}
+
+func TestCheckPasswordHash(t *testing.T) {
+	password := "abcdefghijklM14"
+
+	hash := "$2a$16$oj4SGrEgHVq4Uvne6rTO9O4..G0UVYu.WCjmrw5L4SZQ3yI87Yn1q"
+
+	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
+	if err != nil {
+		t.Fatal("incorrect result")
 	}
 }
