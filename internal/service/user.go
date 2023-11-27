@@ -25,6 +25,10 @@ func (s *UserItem) GetById(userId int) (model.UserOutput, error) {
 }
 
 func (s *UserItem) UpdateById(userId int, input model.UserInput) error {
+	if !utils.ValidateEmail(input.Email) {
+		return errors.New("invalid email")
+	}
+
 	if !utils.ValidatePassword(input.Password) {
 		return errors.New("invalid password")
 	}
