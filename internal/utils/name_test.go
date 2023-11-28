@@ -2,7 +2,7 @@ package utils
 
 import "testing"
 
-func TestValidateName(t *testing.T) {
+func TestIsValidName(t *testing.T) {
 	names := map[string]bool{
 		"abc": true,
 		"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ12345678": true,
@@ -11,7 +11,7 @@ func TestValidateName(t *testing.T) {
 	}
 
 	for k, v := range names {
-		if ValidateName(k) != v {
+		if IsValidName(k) != v {
 			t.Errorf("incorrect result for '%s'", k)
 		}
 	}

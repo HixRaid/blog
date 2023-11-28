@@ -1,8 +1,6 @@
 package service
 
 import (
-	"errors"
-
 	"github.com/hixraid/blog/internal/data/model"
 	"github.com/hixraid/blog/internal/data/repository"
 	"github.com/hixraid/blog/internal/utils"
@@ -25,12 +23,8 @@ func (s *UserItem) GetById(userId int) (model.UserOutput, error) {
 }
 
 func (s *UserItem) UpdateById(userId int, input model.UserInput) error {
-	if !utils.ValidateEmail(input.Email) {
-		return errors.New("invalid email")
-	}
-
-	if !utils.ValidatePassword(input.Password) {
-		return errors.New("invalid password")
+	if err := utils.ValidateUserInput(input); err != nil {
+		return err
 	}
 
 	return s.repository.UpdateById(userId, input)

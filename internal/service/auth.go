@@ -29,12 +29,8 @@ func NewAuthorization(repos repository.UserRepository) *Authorization {
 }
 
 func (s *Authorization) CreateUser(input model.UserInput) (int, error) {
-	if !utils.ValidateEmail(input.Email) {
-		return -1, errors.New("invalid email")
-	}
-
-	if !utils.ValidatePassword(input.Password) {
-		return -1, errors.New("invalid password")
+	if err := utils.ValidateUserInput(input); err != nil {
+		return -1, err
 	}
 
 	password, err := utils.HashPassword(input.Password)

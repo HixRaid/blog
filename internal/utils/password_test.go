@@ -6,7 +6,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func TestValidatePassword(t *testing.T) {
+func TestIsValidPassword(t *testing.T) {
 	passwords := map[string]bool{
 		"abcdefghijklM14":                   true,
 		"abcdeF7":                           false,
@@ -17,7 +17,7 @@ func TestValidatePassword(t *testing.T) {
 	}
 
 	for k, v := range passwords {
-		if ValidatePassword(k) != v {
+		if IsValidPassword(k) != v {
 			t.Errorf("incorrect result for '%s'", k)
 		}
 	}

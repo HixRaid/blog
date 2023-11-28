@@ -9,7 +9,7 @@ import (
 
 const cost = 16
 
-func ValidatePassword(password string) bool {
+func IsValidPassword(password string) bool {
 	len := utf8.RuneCountInString(password)
 
 	if len < 8 || len > 32 {
