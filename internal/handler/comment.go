@@ -5,8 +5,8 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
-	"github.com/hixraid/blog/internal/data/model"
 	"github.com/hixraid/blog/internal/response"
+	"github.com/hixraid/blog/pkg/data/model"
 )
 
 const commentIdParam = "comment_id"

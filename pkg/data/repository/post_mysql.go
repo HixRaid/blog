@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"github.com/hixraid/blog/internal/data/model"
+	"github.com/hixraid/blog/pkg/data/model"
 	"github.com/jmoiron/sqlx"
 )
 

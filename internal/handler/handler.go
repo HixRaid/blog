@@ -3,7 +3,7 @@ package handler
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/hixraid/blog/internal/middleware"
-	"github.com/hixraid/blog/internal/service"
+	"github.com/hixraid/blog/pkg/service"
 )
 
 type Handler struct {

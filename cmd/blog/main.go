@@ -7,10 +7,10 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/hixraid/blog/internal/config"
-	"github.com/hixraid/blog/internal/data/repository"
 	"github.com/hixraid/blog/internal/handler"
 	"github.com/hixraid/blog/internal/server"
-	"github.com/hixraid/blog/internal/service"
+	"github.com/hixraid/blog/pkg/data/repository"
+	"github.com/hixraid/blog/pkg/service"
 	"github.com/sirupsen/logrus"
 )
 

@@ -5,9 +5,9 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
-	"github.com/hixraid/blog/internal/data/model"
-	"github.com/hixraid/blog/internal/data/repository"
-	"github.com/hixraid/blog/internal/utils"
+	"github.com/hixraid/blog/pkg/data/model"
+	"github.com/hixraid/blog/pkg/data/repository"
+	"github.com/hixraid/blog/pkg/utils"
 )
 
 const (

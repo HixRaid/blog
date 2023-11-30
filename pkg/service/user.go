@@ -1,9 +1,9 @@
 package service
 
 import (
-	"github.com/hixraid/blog/internal/data/model"
-	"github.com/hixraid/blog/internal/data/repository"
-	"github.com/hixraid/blog/internal/utils"
+	"github.com/hixraid/blog/pkg/data/model"
+	"github.com/hixraid/blog/pkg/data/repository"
+	"github.com/hixraid/blog/pkg/utils"
 )
 
 type UserItem struct {

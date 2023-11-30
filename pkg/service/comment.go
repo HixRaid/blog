@@ -1,8 +1,8 @@
 package service
 
 import (
-	"github.com/hixraid/blog/internal/data/model"
-	"github.com/hixraid/blog/internal/data/repository"
+	"github.com/hixraid/blog/pkg/data/model"
+	"github.com/hixraid/blog/pkg/data/repository"
 )
 
 type CommentItem struct {

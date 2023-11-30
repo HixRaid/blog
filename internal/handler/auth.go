@@ -4,8 +4,8 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/hixraid/blog/internal/data/model"
 	"github.com/hixraid/blog/internal/response"
+	"github.com/hixraid/blog/pkg/data/model"
 )
 
 type signInInput struct {

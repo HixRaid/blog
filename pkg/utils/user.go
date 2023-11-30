@@ -3,7 +3,7 @@ package utils
 import (
 	"errors"
 
-	"github.com/hixraid/blog/internal/data/model"
+	"github.com/hixraid/blog/pkg/data/model"
 )
 
 func ValidateUserInput(input model.UserInput) error {
