@@ -11,6 +11,11 @@ import (
 
 const commentIdParam = "comment_id"
 
+// Summary: CreateComment;
+// Tag: Comments;
+// Router: /api/posts/:post_id/comments [POST];
+// Request: Token (User), CommentInput;
+// Response: CommentId;
 func (h *Handler) createComment(ctx *gin.Context) {
 	postId, err := strconv.Atoi(ctx.Param(postIdParam))
 	if err != nil {
@@ -35,6 +40,11 @@ func (h *Handler) createComment(ctx *gin.Context) {
 	})
 }
 
+// Summary: GetCommentsByPostId;
+// Tag: Comments;
+// Router: /api/posts/:post_id/comments [GET];
+// Request: PostId;
+// Response: []Comment;
 func (h *Handler) commentsByPostId(ctx *gin.Context) {
 	postId, err := strconv.Atoi(ctx.Param(postIdParam))
 	if err != nil {
@@ -51,6 +61,11 @@ func (h *Handler) commentsByPostId(ctx *gin.Context) {
 	response.NewOkResponse(ctx, comments)
 }
 
+// Summary: UpdateCommentById;
+// Tag: Comments;
+// Router: /api/comments/:comment_id [PUT];
+// Request: Token (User), CommentId;
+// Response: Status;
 func (h *Handler) updateCommentById(ctx *gin.Context) {
 	commentId, err := strconv.Atoi(ctx.Param(commentIdParam))
 	if err != nil {
@@ -73,6 +88,11 @@ func (h *Handler) updateCommentById(ctx *gin.Context) {
 	response.NewStatusResponse(ctx, "OK")
 }
 
+// Summary: DeleteCommentById;
+// Tag: Comments;
+// Router: /api/comments/:comment_id [DELETE];
+// Request: Token (User), CommentId;
+// Response: Status;
 func (h *Handler) deleteCommentById(ctx *gin.Context) {
 	commentId, err := strconv.Atoi(ctx.Param(commentIdParam))
 	if err != nil {

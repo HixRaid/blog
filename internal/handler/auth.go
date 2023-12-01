@@ -17,6 +17,11 @@ type tokenResponse struct {
 	Token string `json:"token"`
 }
 
+// Summary: SignUp;
+// Tag: Auth;
+// Router: /auth/sign-up [POST];
+// Request: UserInput;
+// Response: UserId;
 func (h *Handler) signUp(ctx *gin.Context) {
 	var input model.UserInput
 	if err := ctx.Bind(&input); err != nil {
@@ -35,6 +40,11 @@ func (h *Handler) signUp(ctx *gin.Context) {
 	})
 }
 
+// Summary: SignIn;
+// Tag: Auth;
+// Router: /auth/sign-in [POST];
+// Request: SignInInput;
+// Response: Token;
 func (h *Handler) signIn(ctx *gin.Context) {
 	var input signInInput
 	if err := ctx.Bind(&input); err != nil {

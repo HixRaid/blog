@@ -11,6 +11,11 @@ import (
 
 const postIdParam = "post_id"
 
+// Summary: CreatePost;
+// Tag: Posts;
+// Router: /api/posts [POST];
+// Request: Token (Admin), PostInput;
+// Response: PostId;
 func (h *Handler) createPost(ctx *gin.Context) {
 	var input model.PostInput
 	if err := ctx.Bind(&input); err != nil {
@@ -29,6 +34,11 @@ func (h *Handler) createPost(ctx *gin.Context) {
 	})
 }
 
+// Summary: GetAllPosts;
+// Tag: Posts;
+// Router: /api/posts [GET];
+// Request: nil;
+// Response: []Post;
 func (h *Handler) allPosts(ctx *gin.Context) {
 	posts, err := h.service.Post.GetAll()
 	if err != nil {
@@ -39,6 +49,11 @@ func (h *Handler) allPosts(ctx *gin.Context) {
 	response.NewOkResponse(ctx, posts)
 }
 
+// Summary: GetPostById;
+// Tag: Posts;
+// Router: /api/posts/:post_id [POST];
+// Request: PostId;
+// Response: Post;
 func (h *Handler) postById(ctx *gin.Context) {
 	postId, err := strconv.Atoi(ctx.Param(postIdParam))
 	if err != nil {
@@ -55,6 +70,11 @@ func (h *Handler) postById(ctx *gin.Context) {
 	response.NewOkResponse(ctx, post)
 }
 
+// Summary: UpdatePostById;
+// Tag: Posts;
+// Router: /api/posts/:post_id [PUT];
+// Request: Token (Admin), PostId, PostInput;
+// Response: Status;
 func (h *Handler) updatePostById(ctx *gin.Context) {
 	postId, err := strconv.Atoi(ctx.Param(postIdParam))
 	if err != nil {
@@ -76,6 +96,11 @@ func (h *Handler) updatePostById(ctx *gin.Context) {
 	response.NewStatusResponse(ctx, "OK")
 }
 
+// Summary: DeletePostById;
+// Tag: Posts;
+// Router: /api/posts/:post_id [DELETE];
+// Request: Token (Admin), PostId;
+// Response: Status;
 func (h *Handler) deletePostById(ctx *gin.Context) {
 	postId, err := strconv.Atoi(ctx.Param(postIdParam))
 	if err != nil {
