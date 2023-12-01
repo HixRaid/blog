@@ -34,7 +34,7 @@ func (h *Handler) InitRouter() *gin.Engine {
 
 		posts := api.Group("/posts")
 		{
-			posts.POST("/", h.createPost, middleware.IdentifyUser(h.service.Auth), middleware.IdentifyAdmin(h.service.User))
+			posts.POST("/", middleware.IdentifyUser(h.service.Auth), middleware.IdentifyAdmin(h.service.User), h.createPost)
 			posts.GET("/", h.allPosts)
 			posts.GET("/:post_id", h.postById)
 			posts.PUT("/:post_id", middleware.IdentifyUser(h.service.Auth), middleware.IdentifyAdmin(h.service.User), h.updatePostById)
@@ -42,7 +42,7 @@ func (h *Handler) InitRouter() *gin.Engine {
 
 			comments := api.Group("/:post_id/comments")
 			{
-				comments.POST("/", middleware.IdentifyUser(h.service.Auth), middleware.IdentifyUser(h.service.Auth), h.createComment)
+				comments.POST("/", middleware.IdentifyUser(h.service.Auth), h.createComment)
 				comments.GET("/", h.commentsByPostId)
 			}
 		}
