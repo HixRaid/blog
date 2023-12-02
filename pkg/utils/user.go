@@ -8,15 +8,15 @@ import (
 
 func ValidateUserInput(input model.UserInput) error {
 	if !IsValidName(input.Name) {
-		return errors.New("invalid name")
+		return errors.New("invalid user input name")
 	}
 
 	if !IsValidEmail(input.Email) {
-		return errors.New("invalid email")
+		return errors.New("invalid user input email")
 	}
 
 	if !IsValidPassword(input.Password) {
-		return errors.New("invalid password")
+		return errors.New("invalid user input password")
 	}
 
 	return nil

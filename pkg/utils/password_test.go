@@ -9,6 +9,7 @@ import (
 func TestIsValidPassword(t *testing.T) {
 	passwords := map[string]bool{
 		"abcdefghijklM14":                   true,
+		"abcdefghijklM 14":                  false,
 		"abcdeF7":                           false,
 		"abcdefghijklM":                     false,
 		"abcdefghijklm14":                   false,

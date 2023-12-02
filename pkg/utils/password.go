@@ -29,6 +29,8 @@ func IsValidPassword(password string) bool {
 			hasLower = true
 		case unicode.IsDigit(s):
 			hasDigit = true
+		case unicode.IsSpace(s):
+			return false
 		}
 	}
 

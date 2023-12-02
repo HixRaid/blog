@@ -3,6 +3,7 @@ package service
 import (
 	"github.com/hixraid/blog/pkg/data/model"
 	"github.com/hixraid/blog/pkg/data/repository"
+	"github.com/hixraid/blog/pkg/utils"
 )
 
 type PostItem struct {
@@ -14,6 +15,9 @@ func NewPostItem(repos repository.PostRepository) *PostItem {
 }
 
 func (s *PostItem) Create(input model.PostInput) (int, error) {
+	if err := utils.ValidatePostInput(input); err != nil {
+		return -1, err
+	}
 	return s.repository.Create(input)
 }
 
@@ -26,6 +30,9 @@ func (s *PostItem) GetById(postId int) (model.Post, error) {
 }
 
 func (s *PostItem) UpdateById(postId int, input model.PostInput) error {
+	if err := utils.ValidatePostInput(input); err != nil {
+		return err
+	}
 	return s.repository.UpdateById(postId, input)
 }
 
