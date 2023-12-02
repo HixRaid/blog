@@ -2,17 +2,18 @@ package utils
 
 import (
 	"unicode"
-	"unicode/utf8"
 
 	"golang.org/x/crypto/bcrypt"
 )
 
-const cost = 16
+const (
+	minPasswordLen = 8
+	maxPasswordLen = 32
+	cost           = 16
+)
 
 func IsValidPassword(password string) bool {
-	len := utf8.RuneCountInString(password)
-
-	if len < 8 || len > 32 {
+	if !IsValidText(password, minPasswordLen, maxPasswordLen) {
 		return false
 	}
 
