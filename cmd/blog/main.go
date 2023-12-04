@@ -1,10 +1,12 @@
 package main
 
 import (
+	"flag"
 	"os"
 	"os/signal"
 	"syscall"
 
+	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/hixraid/blog/internal/config"
 	"github.com/hixraid/blog/internal/handler"
@@ -15,6 +17,10 @@ import (
 )
 
 func main() {
+	if !debugFlag() {
+		gin.SetMode(gin.ReleaseMode)
+	}
+
 	cfgFile, err := config.LoadConfig("config")
 	if err != nil {
 		logrus.Fatalf("can't load config: %v", err)
@@ -50,4 +56,10 @@ func main() {
 	if err := srv.Shutdown(); err != nil {
 		logrus.Errorf("error occurred while shutting down server: %v", err)
 	}
+}
+
+func debugFlag() bool {
+	var isEnable = flag.Bool("debug", false, "-debug, uses false as default")
+	flag.Parse()
+	return *isEnable
 }
