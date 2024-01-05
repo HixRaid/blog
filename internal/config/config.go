@@ -3,20 +3,20 @@ package config
 import "github.com/spf13/viper"
 
 type Config struct {
-	Server *ServerConfig
-	DB     *DBConfig
+	Server *ServerConfig `mapstructure:"server"`
+	DB     *DBConfig     `mapstructure:"db"`
 }
 
 type ServerConfig struct {
-	Addr string `yaml:"addr"`
+	Addr string `mapstructure:"addr"`
 }
 
 type DBConfig struct {
-	Host     string `yaml:"host"`
-	Port     string `yaml:"port"`
-	User     string `yaml:"user"`
-	Password string `yaml:"password"`
-	Name     string `yaml:"name"`
+	Host     string `mapstructure:"host"`
+	Port     string `mapstructure:"port"`
+	User     string `mapstructure:"user"`
+	Password string `mapstructure:"password"`
+	Name     string `mapstructure:"name"`
 }
 
 func LoadConfig(fileName string) (*viper.Viper, error) {
