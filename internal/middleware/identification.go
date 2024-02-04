@@ -2,7 +2,6 @@ package middleware
 
 import (
 	"errors"
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -28,8 +27,6 @@ func IdentifyUser(s service.AuthService) gin.HandlerFunc {
 			response.NewErrorResponse(ctx, http.StatusUnauthorized, "invalid auth header")
 			return
 		}
-
-		fmt.Println(headerData)
 
 		userId, err := s.ParseToken(headerData)
 		if err != nil {
