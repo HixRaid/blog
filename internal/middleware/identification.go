@@ -2,8 +2,8 @@ package middleware
 
 import (
 	"errors"
+	"fmt"
 	"net/http"
-	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/hixraid/blog/internal/response"
@@ -18,19 +18,20 @@ const (
 
 func IdentifyUser(s service.AuthService) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		header := ctx.GetHeader(authHeader)
-		if header == "" {
+		headerData := ctx.GetHeader(authHeader)
+		if headerData == "" {
 			response.NewErrorResponse(ctx, http.StatusUnauthorized, "empty auth header")
 			return
 		}
 
-		headerData := strings.Split(header, " ")
-		if (len(headerData) != 2 || headerData[0] != "Bearer") || len(headerData[1]) == 0 {
+		if len(headerData) == 0 {
 			response.NewErrorResponse(ctx, http.StatusUnauthorized, "invalid auth header")
 			return
 		}
 
-		userId, err := s.ParseToken(headerData[1])
+		fmt.Println(headerData)
+
+		userId, err := s.ParseToken(headerData)
 		if err != nil {
 			response.NewErrorResponse(ctx, http.StatusUnauthorized, err.Error())
 			return

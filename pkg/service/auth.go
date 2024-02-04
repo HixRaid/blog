@@ -69,7 +69,7 @@ func (s *Authorization) ParseToken(accessToken string) (int, error) {
 			return nil, errors.New("invalid signing method")
 		}
 
-		return []byte(accessToken), nil
+		return []byte(signingKey), nil
 	})
 
 	if err != nil {
