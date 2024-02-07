@@ -5,8 +5,8 @@ import "time"
 type Role int8
 
 const (
-	UserRole  Role = 0
-	AdminRole Role = 1
+	UserRole Role = iota
+	AdminRole
 )
 
 type User struct {

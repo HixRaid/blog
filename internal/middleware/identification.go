@@ -53,7 +53,7 @@ func IdentifyAdmin(s service.UserService) gin.HandlerFunc {
 		}
 
 		if user.Role != model.AdminRole {
-			response.NewErrorResponse(ctx, http.StatusForbidden, err.Error())
+			response.NewErrorResponse(ctx, http.StatusForbidden, "insufficient user rights")
 			return
 		}
 	}
