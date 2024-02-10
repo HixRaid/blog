@@ -2,8 +2,6 @@
 
 Simple Go blog
 
-> The api is still in development
-
 ## 📄 Routes
 
 - /auth
